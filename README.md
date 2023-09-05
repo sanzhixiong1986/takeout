@@ -80,3 +80,6 @@
 
 	问题6：vo 对象 继承Serializable
 
+### 第二天任务
+
+导入json到yapi https://yapi.pro/group/108293 通过这个把接口导入里面

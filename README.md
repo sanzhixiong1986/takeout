@@ -83,3 +83,23 @@
 ### 第二天任务
 
 导入json到yapi https://yapi.pro/group/108293 通过这个把接口导入里面
+
+swagger.io
+
+框架 knife4j
+
+1.导入到manve
+
+	<dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-spring-boot-starter</artifactId>
+        <version>${knife4j}</version>
+    </dependency>
+	
+2.加入想入的配置
+	
+3.设置静态的映射
+	
+4.demo：WebMvcConfiguration类作为参考
+
+5.做出员工添加的功能，请参考 Control.admin.EmployeeController的方法 save方法，EmployeeServiceImpl的save写执行的逻辑

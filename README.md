@@ -103,3 +103,17 @@ swagger.io
 4.demo：WebMvcConfiguration类作为参考
 
 5.做出员工添加的功能，请参考 Control.admin.EmployeeController的方法 save方法，EmployeeServiceImpl的save写执行的逻辑
+
+6.使用pagehelp 进行分页
+
+	<dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper}</version>
+    </dependency>
+
+7.时间格式化
+
+(1)使用注解@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss");
+
+(2)扩展操作

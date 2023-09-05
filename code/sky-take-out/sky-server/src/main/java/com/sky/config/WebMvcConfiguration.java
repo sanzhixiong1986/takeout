@@ -2,10 +2,13 @@ package com.sky.config;
 
 import com.sky.SkyApplication;
 import com.sky.interceptor.JwtTokenAdminInterceptor;
+import com.sky.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.cbor.MappingJackson2CborHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -18,6 +21,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * 配置类，注册web层相关组件
@@ -45,6 +50,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 通过knife4j生成接口文档
+     *
      * @return
      */
     @Bean
@@ -66,8 +72,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 设置静态资源映射
-     * @param registry
-     * 3这是第三步
+     *
+     * @param registry 3这是第三步
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("开始设置静态");

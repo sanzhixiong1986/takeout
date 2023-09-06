@@ -19,8 +19,32 @@
             <if test="name !=null">
                 name = #{name}
             </if>
-            <if test="status !=null ">
+
+            <if test="status !=null">
                 status = #{status}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="SaveUpdate" parameterType="com.sky.dto.EmployeeDTO">
+        update employee
+        <set>
+            <if test="name !=null">
+                name = #{name},
+            </if>
+            <if test="username !=null">
+                username = #{username},
+            </if>
+            <if test="phone !=null">
+                phone = #{phone},
+            </if>
+            <if test="sex !=null">
+                sex = #{sex},
+            </if>
+            <if test="idNumber !=null">
+                id_Number = #{idNumber},
             </if>
         </set>
         where id = #{id}

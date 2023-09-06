@@ -93,12 +93,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 员工分页查询
+     *
      * @param employeePageQueryDTO
      * @return
      */
-    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         //作为拼接的参数
-        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
 
@@ -106,19 +107,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         List<Employee> results = page.getResult();
 
-        return new PageResult(total,results);
+        return new PageResult(total, results);
     }
 
     /**
      * 更新状态
+     *
      * @param status
      * @param id
      */
-    public void startOrStop(Integer status, Long id){
+    public void startOrStop(Integer status, Long id) {
         Employee employee = new Employee();
         employee.setId(id);
         employee.setStatus(status);
 
         employeeMapper.update(employee);
+    }
+
+    public Employee editData(Long id) {
+        Employee employee = employeeMapper.edit(id);
+        return employee;
+    }
+
+    public void updatePersion(EmployeeDTO employeeDTO) {
+        employeeMapper.SaveUpdate(employeeDTO);
     }
 }

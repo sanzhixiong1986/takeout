@@ -100,7 +100,25 @@ public class EmployeeController {
     @ApiOperation("启用禁用账号")
     public Result startOrStop(@PathVariable("status") Integer status, Long id) {
         log.info("启动禁用账号{},{}", status, id);
-        employeeService.startOrStop(status,id);
+        employeeService.startOrStop(status, id);
         return Result.success();
     }
+
+
+    @GetMapping("/{id}")
+    @ApiOperation("id查询用户数据")
+    public Result<Employee> editData(@PathVariable("id") Long id) {
+        log.info("id查询用户数据{}", id);
+        Employee employee = employeeService.editData(id);
+        return Result.success(employee);
+    }
+
+    @PutMapping
+    @ApiOperation("用户修改状态")
+    public Result updatePersion(@RequestBody EmployeeDTO employeeDTO){
+        log.info("修改员工:{},{}", employeeDTO);
+        employeeService.updatePersion(employeeDTO);
+        return Result.success();
+    }
+
 }

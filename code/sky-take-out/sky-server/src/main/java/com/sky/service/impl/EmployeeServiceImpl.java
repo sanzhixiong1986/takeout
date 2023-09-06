@@ -81,12 +81,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置密码
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
         //设置创建时间和修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        //核心之一threadLocal.get方法
-        Long mid = BaseContext.getCurrentId();
-        employee.setCreateUser(mid);
-        employee.setUpdateUser(mid);
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //核心之一threadLocal.get方法
+//        Long mid = BaseContext.getCurrentId();
+//        employee.setCreateUser(mid);
+//        employee.setUpdateUser(mid);
 
         employeeMapper.insert(employee);
     }
@@ -129,7 +129,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    public void updatePersion(EmployeeDTO employeeDTO) {
+    public void updatePersion(Employee employeeDTO) {
         employeeMapper.SaveUpdate(employeeDTO);
     }
 }

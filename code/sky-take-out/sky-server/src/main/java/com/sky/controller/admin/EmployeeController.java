@@ -115,7 +115,7 @@ public class EmployeeController {
 
     @PutMapping
     @ApiOperation("用户修改状态")
-    public Result updatePersion(@RequestBody EmployeeDTO employeeDTO){
+    public Result updatePersion(@RequestBody Employee employeeDTO){
         log.info("修改员工:{},{}", employeeDTO);
         employeeService.updatePersion(employeeDTO);
         return Result.success();

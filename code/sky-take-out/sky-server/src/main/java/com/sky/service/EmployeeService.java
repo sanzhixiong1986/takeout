@@ -34,5 +34,5 @@ public interface EmployeeService {
 
     Employee editData(Long id);
 
-    void updatePersion(EmployeeDTO employeeDTO);
+    void updatePersion(Employee employeeDTO);
 }

@@ -13,8 +13,8 @@ public interface SetmealDishMapper {
 
     /**
      * 根据id获得相关的
-     * @param id
+     * @param dishIds
      * @return
      */
-    List<Long> getSetmealByDishId(List<Long> id);
+    List<Long> getSetmealByDishId(List<Long> dishIds);
 }

@@ -4,6 +4,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,22 @@ public class DishController {
     public Result delDish(@RequestParam List<Long> ids) {
         log.info("删除的产品{}", ids);
         dishService.deleteBash(ids);
-        return null;
+        return Result.success();
+    }
+
+    /**
+     * 设置是否棋手状态
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public Result setTatue(@PathVariable("status") Integer status, Long id){
+        log.info("设置状态{},{}",status,id);
+        DishVO vo = new DishVO();
+        vo.setStatus(status);
+        vo.setId(id);
+        dishService.setDishStatue(vo);
+        return Result.success();
     }
 }

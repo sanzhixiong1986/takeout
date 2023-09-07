@@ -50,8 +50,10 @@ public class DishServicelmpl implements DishService {
         //判断是否是起售状态就是dish表中的status状态数据
         for (Long id : ids) {
             Dish dish = dishMapper.getId(id);
-            if (dish.getStatus() == StatusConstant.ENABLE) {
-                throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
+            if(dish != null){
+                if (dish.getStatus() == StatusConstant.ENABLE) {
+                    throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
+                }
             }
         }
 
@@ -64,5 +66,9 @@ public class DishServicelmpl implements DishService {
             dishMapper.deleteById(id);
             dishFlavorMapper.deleteByDishId(id);
         }
+    }
+
+    public void setDishStatue(DishVO vo){
+        dishMapper.setStatue(vo);
     }
 }

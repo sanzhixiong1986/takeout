@@ -71,4 +71,5 @@ public class DishServicelmpl implements DishService {
     public void setDishStatue(DishVO vo){
         dishMapper.setStatue(vo);
     }
+
 }

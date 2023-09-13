@@ -14,36 +14,36 @@
 	其中 proxy http://xxxxxxxx 当请求/API的时候就会跳转到代理的网址，这样就可以隐藏你的真是地址
 
 	location / { 
-            root  html; 
-            index  index.html index.htm; 
-            proxy_pass http://linuxidc; //反向代理 群组
-	}
-
-	upstream linuxidc { 
-      		server 10.0.6.108:7080; 
-      		server 10.0.0.85:8980; 
+	        root  html; 
+	        index  index.html index.htm; 
+	        proxy_pass http://linuxidc; //反向代理 群组
 	}
 	
-    群主，根据规则进行
+	upstream linuxidc { 
+	  		server 10.0.6.108:7080; 
+	  		server 10.0.0.85:8980; 
+	}
+	
+	群主，根据规则进行
 	（1）权重配置
 	upstream linuxidc { 
-      		server 10.0.6.108:7080; weight = 5;
-      		server 10.0.0.85:8980;  weight = 10;
+	  		server 10.0.6.108:7080; weight = 5;
+	  		server 10.0.0.85:8980;  weight = 10;
 	}
 	问题：切换了网站以后可能登陆的session保存会出现问题
 	
-    （2）ip_hash（可以通过哈希绑定一个服务器，这样就可以操作session了）1比1的绑定关系
+	（2）ip_hash（可以通过哈希绑定一个服务器，这样就可以操作session了）1比1的绑定关系
 	upstream favresin{ 
-      		ip_hash; 
-      		server 10.0.0.10:8080; 
-      		server 10.0.0.11:8080; 
+	  		ip_hash; 
+	  		server 10.0.0.10:8080; 
+	  		server 10.0.0.11:8080; 
 	}
-
+	
 	(3) fair 根据响音时间来
 	upstream favresin{      
-      		server 10.0.0.10:8080; 
-      		server 10.0.0.11:8080; 
-      		fair; 
+	  		server 10.0.0.10:8080; 
+	  		server 10.0.0.11:8080; 
+	  		fair; 
 	}
 	（4）为每一个设备设置状态值
 	down 表示单前的server临时不參与负载.
@@ -52,13 +52,13 @@
 	fail_timeout : max_fails次失败后。暂停的时间。
 	backup： 其他全部的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。
 	upstream bakend{ #定义负载均衡设备的Ip及设备状态 
-    		ip_hash; 
-    		server 10.0.0.11:9090 down; 
-    		server 10.0.0.11:8080 weight=2; 
-    		server 10.0.0.11:6060; 
-    		server 10.0.0.11:7070 backup; 
+			ip_hash; 
+			server 10.0.0.11:9090 down; 
+			server 10.0.0.11:8080 weight=2; 
+			server 10.0.0.11:6060; 
+			server 10.0.0.11:7070 backup; 
 	}
-	
+
 3.登陆模块相关，md5，SpringMVC 搭建，mysql数据库的相关操作
 	问题1：mysql的配置在哪里。resources->application-dev.yml配置中
 	问题2：登陆模块的控制器在哪里 controller.admin下面
@@ -75,9 +75,9 @@
 	可以直接使用log的操作
 	
 	@PostMapping 就是一个post的方式进行请求这个api函数
-
+	
 	问题5：vo，dto的区别 vo是服务器返回给客户端的数据，dto是客户端对服务器发送的数据
-
+	
 	问题6：vo 对象 继承Serializable
 
 ### 第二天任务
@@ -91,11 +91,11 @@ swagger.io
 1.导入到manve
 
 	<dependency>
-        <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-spring-boot-starter</artifactId>
-        <version>${knife4j}</version>
-    </dependency>
-	
+	    <groupId>com.github.xiaoymin</groupId>
+	    <artifactId>knife4j-spring-boot-starter</artifactId>
+	    <version>${knife4j}</version>
+	</dependency>
+
 2.加入想入的配置
 	
 3.设置静态的映射
@@ -107,10 +107,10 @@ swagger.io
 6.使用pagehelp 进行分页
 
 	<dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper-spring-boot-starter</artifactId>
-        <version>${pagehelper}</version>
-    </dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper-spring-boot-starter</artifactId>
+	    <version>${pagehelper}</version>
+	</dependency>
 
 7.时间格式化
 

@@ -83,4 +83,4 @@ public class RedisConfiguration {
 redisTemplate.opsForValue().set(SHOP,status);
 ```
 
-如果需要有一个服务器和客户端中间内存的数据可以使用redis进行存储操作。
+如果需要有一个服务器和客户端中间内存的数据可以使用redis进行存储操作。 .

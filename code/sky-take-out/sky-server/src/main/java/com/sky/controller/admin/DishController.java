@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
@@ -26,6 +27,9 @@ import java.util.List;
 public class DishController {
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private RedisTemplate redisTemplate; //操作redis的类
 
     private static Logger log = LoggerFactory.getLogger(DishController.class);
 
@@ -48,22 +52,28 @@ public class DishController {
     public Result delDish(@RequestParam List<Long> ids) {
         log.info("删除的产品{}", ids);
         dishService.deleteBash(ids);
+        for (Long id : ids) {
+            redisTemplate.delete("dish_" + id);
+        }
         return Result.success();
     }
 
     /**
      * 设置是否棋手状态
+     *
      * @param status
      * @param id
      * @return
      */
     @PostMapping("/status/{status}")
-    public Result setTatue(@PathVariable("status") Integer status, Long id){
-        log.info("设置状态{},{}",status,id);
+    public Result setTatue(@PathVariable("status") Integer status, Long id) {
+        log.info("设置状态{},{}", status, id);
         DishVO vo = new DishVO();
         vo.setStatus(status);
         vo.setId(id);
         dishService.setDishStatue(vo);
+
+        redisTemplate.delete("dish_" + id);
         return Result.success();
     }
 }

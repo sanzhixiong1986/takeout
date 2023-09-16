@@ -55,6 +55,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @return
      */
     public List<DishItemVO> getDishItemById(Long id) {
+        //根据id查询缓存中是否有相应的数据
         return setmealMapper.getDishItemBySetmealId(id);
     }
 }

@@ -10,3 +10,14 @@ sky:
     host:localhost
     port:6379
     database:10
+  wechat:
+    appid: wxffb3637a228223b8
+    secret: 17283917298379182739
+    mchid: 7189237198                           #商户号
+    mchSerialNo: 17823791273871928379812739871  #商户的序列号
+    privateKeyFilePath:d:\apiclient_key.pem     #对应的私钥文件
+    apiV3Key:849028340928409
+    weChatPayCertFilePath:d:\ajlkdjkasjdl.pem   #平台证书文件
+    notifyUrl:https://ajlksdjkasdjlk/paySuccess #配置的成功页面
+    refundNotifyUrl:https://ajlksdjkasdjlk/paySuccess #款成功
+

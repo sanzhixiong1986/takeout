@@ -65,4 +65,14 @@ public class ShoppingCartServicelmpl implements ShoppingCartService {
             shoppingCartMapper.insert(shoppingCart);
         }
     }
+
+    /**
+     * 查看
+     * @param userId
+     * @return
+     */
+    public List<ShoppingCart> listView(Integer userId) {
+        List<ShoppingCart> list = shoppingCartMapper.viewList(userId);
+        return list;
+    }
 }

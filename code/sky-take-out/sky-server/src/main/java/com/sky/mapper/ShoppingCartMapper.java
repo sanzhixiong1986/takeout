@@ -34,4 +34,10 @@ public interface ShoppingCartMapper {
 
     @Select("select * from shopping_cart userId = #{userId}")
     List<ShoppingCart> viewList(Integer userId);
+
+    /**
+     * 清空购物车
+     * @param userId
+     */
+    void deleteByUserId(Long userId);
 }

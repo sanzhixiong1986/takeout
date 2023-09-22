@@ -8,10 +8,7 @@ import com.sky.vo.OrderSubmitVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sky.service.OrderSerivce;
 
@@ -33,10 +30,11 @@ public class OrderController {
 
     /**
      * 用户下单
+     *
      * @param ordersSubmitDTO
      * @return
      */
-    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
+    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO) {
         OrderSubmitVO orderSubmitVO = orderSerivce.submitOrder(ordersSubmitDTO);
         return Result.success(orderSubmitVO);
     }
@@ -54,5 +52,18 @@ public class OrderController {
         OrderPaymentVO orderPaymentVO = orderSerivce.payment(ordersPaymentDTO);
         log.info("生成预支付交易单：{}", orderPaymentVO);
         return Result.success(orderPaymentVO);
+    }
+
+    /**
+     * 客户催单
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("客户催单")
+    public Result reminder(@PathVariable("id") Long id) {
+        log.info("用户催单，订单号", id);
+        orderSerivce.reminder(id);
+        return Result.success();
     }
 }

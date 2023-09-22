@@ -16,6 +16,7 @@ import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.websocket.WebSocketServer;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -166,5 +167,25 @@ public class OrderSerivcelmpl implements OrderSerivce {
         map.put("content", "订单号:" + outTradeNo);
         String json = JSON.toJSONString(map);
         webSocketServer.sendToAllClient(json);
+    }
+
+    /**
+     * 客户端催单
+     * @param id
+     */
+    public void reminder(Long id) {
+
+
+        Orders ordersDB = orderMapper.getByNumber(id.toString());
+        if(ordersDB == null){
+            Throw ShoppingCartBusinessException(MessageConstant.LOGIN_FAILED);
+        }
+        //判断是否已经有这个存单，如果有就发送websocket，如果没有就告诉客户端有问题
+        Map map = new HashMap();
+        map.put("type", 2);
+        map.put("orderId", ordersDB.getId());
+        map.put("content", "订单号:" + id);
+
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 }

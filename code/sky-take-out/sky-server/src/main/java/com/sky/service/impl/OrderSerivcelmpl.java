@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
@@ -14,6 +15,7 @@ import com.sky.service.OrderSerivce;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderSerivcelmpl implements OrderSerivce {
@@ -46,12 +50,15 @@ public class OrderSerivcelmpl implements OrderSerivce {
     @Autowired
     private WeChatPayUtil weChatPayUtil;
 
+    @Autowired
+    private WebSocketServer webSocketServer;
+
 
     /**
      * 提交相关数据
+     *
      * @param ordersSubmitDTO
-     * @return
-     * 需要加一个注解，保证两个插入数据都应该成功，如果有一个失败则需要回滚。
+     * @return 需要加一个注解，保证两个插入数据都应该成功，如果有一个失败则需要回滚。
      */
     @Transactional
     public OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO) {
@@ -67,13 +74,13 @@ public class OrderSerivcelmpl implements OrderSerivce {
         Long userId = BaseContext.getCurrentId();
         shoppingCart.setUserId(userId);
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
-        if (list == null || list.size() <= 0){
-            throw  new ShoppingCartBusinessException(MessageConstant.SHOPPING_CART_IS_NULL);
+        if (list == null || list.size() <= 0) {
+            throw new ShoppingCartBusinessException(MessageConstant.SHOPPING_CART_IS_NULL);
         }
         //end
         //订单表插入一条数据
         Orders orders = new Orders();
-        BeanUtils.copyProperties(ordersSubmitDTO,orders);
+        BeanUtils.copyProperties(ordersSubmitDTO, orders);
         orders.setOrderTime(LocalDateTime.now());
         orders.setPayStatus(Orders.UN_PAID);
         orders.setStatus(Orders.PENDING_PAYMENT);
@@ -86,7 +93,7 @@ public class OrderSerivcelmpl implements OrderSerivce {
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (ShoppingCart cart : list) {
             OrderDetail orderDetail = new OrderDetail();
-            BeanUtils.copyProperties(cart,orderDetail);
+            BeanUtils.copyProperties(cart, orderDetail);
             orderDetail.setOrderId(orderDetail.getOrderId());
             orderDetails.add(orderDetail);//插入到list里面
         }
@@ -151,5 +158,13 @@ public class OrderSerivcelmpl implements OrderSerivce {
                 .build();
 
         orderMapper.update(orders);
+
+        //推送消息
+        Map map = new HashMap();
+        map.put("type", 1);
+        map.put("orderId", ordersDB.getId());
+        map.put("content", "订单号:" + outTradeNo);
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 }

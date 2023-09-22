@@ -8,12 +8,14 @@ package com.sky;
         import org.springframework.boot.autoconfigure.SpringBootApplication;
         import org.springframework.cache.annotation.EnableCaching;
         import org.springframework.data.redis.core.RedisTemplate;
+        import org.springframework.scheduling.annotation.EnableScheduling;
         import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement //开启注解方式的事务管理
 @Slf4j
-@EnableCaching
+@EnableCaching //加入对应的cach的注解
+@EnableScheduling //加入对应的启动注解
 public class SkyApplication {
     private static Logger log = LoggerFactory.getLogger(SkyApplication.class);
 

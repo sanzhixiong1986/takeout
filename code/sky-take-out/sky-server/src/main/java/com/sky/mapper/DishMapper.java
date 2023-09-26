@@ -46,4 +46,12 @@ public interface DishMapper {
     void deleteById(Long id);
 
     void setStatue(DishVO vo);
+
+
+    /**
+     * 根据条件统计菜品数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }

@@ -31,6 +31,7 @@ public class ReportServicelmpl implements ReportService {
         //时间的计算出来字符串
         List<LocalDate> dateList = new ArrayList<>();
         dateList.add(begin);
+        //日期的字符串计算
         while (!begin.equals(end)) {
             begin = begin.plusDays(1);
             dateList.add(begin);
@@ -39,8 +40,8 @@ public class ReportServicelmpl implements ReportService {
         List<Double> sumList = new ArrayList<>();
         for (LocalDate date : dateList) {
             //营业额的状态为已经完成的
-            LocalDateTime BeginTime = LocalDateTime.of(date, LocalTime.MIN);
-            LocalDateTime EndTime = LocalDateTime.of(date, LocalTime.MAX);
+            LocalDateTime BeginTime = LocalDateTime.of(date, LocalTime.MIN);//date 00:00:00
+            LocalDateTime EndTime = LocalDateTime.of(date, LocalTime.MAX);  //date 23:59:59
             //数据库操作
             Map map = new HashMap();
             map.put("begin", BeginTime);
